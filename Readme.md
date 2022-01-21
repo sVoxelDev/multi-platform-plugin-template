@@ -1,18 +1,20 @@
-# Spigot Plugin Template
+# Minecraft Multi-Platform Template
 
-[![Build Status](https://github.com/Silthus/spigot-plugin-template/workflows/Build/badge.svg)](../../actions?query=workflow%3ABuild)
-[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/Silthus/spigot-plugin-template?include_prereleases&label=release)](../../releases)
+[![Build Status](https://github.com/sVoxelDev/multi-platform-template/workflows/Build/badge.svg)](../../actions?query=workflow%3ABuild)
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/sVoxelDev/multi-platform-template?include_prereleases&label=release)](../../releases)
 ![Spiget tested server versions](https://img.shields.io/spiget/tested-versions/79903)
 [![Spiget Downloads](https://img.shields.io/spiget/downloads/79903)](https://www.spigotmc.org/resources/splugintemplate.79903/)
 [![Spiget Rating](https://img.shields.io/spiget/rating/79903)](https://www.spigotmc.org/resources/splugintemplate.79903/)
-[![codecov](https://codecov.io/gh/Silthus/spigot-plugin-template/branch/master/graph/badge.svg)](https://codecov.io/gh/Silthus/spigot-plugin-template)
+[![codecov](https://codecov.io/gh/sVoxelDev/multi-platform-template/branch/master/graph/badge.svg)](https://codecov.io/gh/sVoxelDev/multi-platform-template)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Discord Shield](https://discordapp.com/api/guilds/905798902874267690/widget.png?style=shield)](https://discord.gg/HSU8FtgjVD)
 
-You can use this template to develop your own high quality Spigot plugins using [Gradle](https://gradle.org/) with ease.
+You can use this template to develop your own high quality Minecraft plugins for multiple platforms using [Gradle](https://gradle.org/) with ease.
 
-> See the [minecraft-server-template](https://github.com/Silthus/minecraft-server-template) for quick starting your Minecraft network in under 30 seconds.
+This template is a more advanced version of the [spigot-plugin-template](https://github.com/sVoxelDev/spigot-plugin-template) and overs an easy start to develop your plugin for multiple Minecraft platforms, like `Paper`, `Nukkit`, `Velocity`, `Bungee`, etc.
+
+> See the [minecraft-server-template](https://github.com/sVoxelDev/minecraft-server-template) for quick starting your Minecraft network in under 30 seconds.
 
 * [Features](#features)
 * [Quickstart setup](#quickstart-setup)
@@ -28,7 +30,7 @@ You can use this template to develop your own high quality Spigot plugins using 
 
 ## Features
 
-The template or better boilerplate comes with a lot of features that are useful if you want to develop high quality plugins. However you don't need to use all of them, you can simply remove the features you don't need.
+The template or better boilerplate comes with a lot of features that are useful if you want to develop high quality plugins. However, you don't need to use all of them, you can simply remove the features you don't need.
 
 * Ready to use [**Gradle**](https://gradle.org/) project with lots of utility tasks
 * Automatic **generation of `plugin.yaml`** based of project properties with [SpiGradle](https://github.com/EntryPointKR/Spigradle/)

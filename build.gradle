@@ -5,104 +5,93 @@ buildscript {
 }
 
 plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.0'
-    id 'kr.entree.spigradle' version '2.2.4'
-    id 'io.freefair.lombok' version '6.3.0'
-    id 'java'
-    id 'jacoco'
-    id 'idea'
+    id 'com.github.johnrengelman.shadow' version '7.1.0' apply false
+    id 'kr.entree.spigradle' version '2.2.4' apply false
+    id 'io.freefair.lombok' version '6.3.0' apply false
+    id 'org.cadixdev.licenser' version '0.6.1' apply false
 }
 
-apply from: "$rootDir/gradle/jacoco.gradle"
-apply from: "$rootDir/gradle/publish.gradle"
+allprojects {
+    apply plugin: 'checkstyle'
 
-if (project.hasProperty("local_script")) {
-    apply from: file(local_script + "/build.local.gradle")
+    checkstyle {
+        configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+        configProperties.checkstyleSuppressionsPath = rootProject.file('config/checkstyle/supressions.xml')
+    }
 }
 
-sourceCompatibility = 17
-targetCompatibility = 17
+subprojects {
+    apply plugin: 'com.github.johnrengelman.shadow'
+    apply plugin: 'io.freefair.lombok'
+    apply plugin: 'org.cadixdev.licenser'
+    apply plugin: 'jacoco'
+    apply plugin: 'java-library'
+    apply plugin: 'java-test-fixtures'
+    apply plugin: 'idea'
 
-ext {
-    mcVersion = project.property("mcVersion")
-}
+    apply from: "$rootDir/gradle/jacoco.gradle"
+    apply from: "$rootDir/gradle/publish.gradle"
 
-group project.property("group")
+    if (project.hasProperty("local_script")) {
+        apply from: file(local_script + "/build.local.gradle")
+    }
 
-spigot {
-    name = project.property("pluginName")
-    authors = [project.property("author")]
-    apiVersion = project.property("apiVersion")
-    load = STARTUP
-    // depends = ['']
-    softDepends = ['Vault']
-}
+    sourceCompatibility = 17
+    targetCompatibility = 17
 
-compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs += ["-parameters"]
-    options.fork = true
-    options.forkOptions.executable = 'javac'
-}
+    archivesBaseName = project.property("pluginName")
+    group project.property("group")
 
-archivesBaseName = project.property("pluginName")
+    ext {
+        mcVersion = project.property("mcVersion")
+    }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    spigot()
-    maven { url = 'https://jitpack.io' }
-    maven { url = 'https://repo.aikar.co/content/groups/aikar/' }
-    maven { url = 'https://repo.dmulloy2.net/repository/public/' }
-    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/public/' }
-    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots/' }
-}
+    compileJava {
+        options.encoding = 'UTF-8'
+        options.compilerArgs += ["-parameters"]
+        options.fork = true
+        options.forkOptions.executable = 'javac'
+    }
 
-dependencies {
-    // using spigot-api
-    implementation spigot(mcVersion)
-    // or using paper-api
-    // implementation "io.papermc.paper:paper-api:${mcVersion}-R0.1-SNAPSHOT"
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url = 'https://jitpack.io' }
+    }
 
-    // Add your dependencies here
-    // Here are some opinionated dependencies that might help you with your plugin development:
-
-    // Annotation Command Framework: https://github.com/aikar/commands
-    implementation "co.aikar:acf-paper:0.5.0-SNAPSHOT"
-    // Vault (https://github.com/MilkBowl/VaultAPI) for economy, permissions and chat API
-    implementation "com.github.MilkBowl:VaultAPI:1.7.1"
-
-    // Test dependencies
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
-    testImplementation 'org.mockito:mockito-core:4.0.0'
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.17:1.7.0'
-    testImplementation 'org.assertj:assertj-core:3.21.0'
-}
-
-shadowJar {
-    classifier = ''
     dependencies {
-        include(dependency('co.aikar:acf-paper:0.5.0-SNAPSHOT'))
+        api 'net.kyori:adventure-api:4.10.0-SNAPSHOT'
+
+        implementation 'org.jetbrains:annotations:22.0.0'
+
+        // Test dependencies
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+        testImplementation 'org.mockito:mockito-core:4.0.0'
+        testImplementation 'org.assertj:assertj-core:3.21.0'
+
+        testFixturesImplementation 'org.mockito:mockito-core:4.0.0'
+        testFixturesImplementation 'org.assertj:assertj-core:3.21.0'
+        testFixturesImplementation 'org.apache.commons:commons-lang3:3.12.0'
     }
-    relocate 'co.aikar.commands', "${packageName}.acf"
-    relocate 'co.aikar.locales', "${packageName}.locales"
-}
 
-tasks.build.dependsOn(shadowJar)
-tasks.publish.dependsOn(shadowJar)
-tasks.prepareSpigotPlugins.dependsOn(shadowJar)
-
-test {
-    useJUnitPlatform()
-    testLogging {
-        events "skipped", "failed"
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "skipped", "failed"
+        }
+        ignoreFailures = false
     }
-    ignoreFailures = false
-}
 
-processResources {
-    project.properties.put("version", this.version)
-    expand project.properties
-}
+    processResources {
+        project.properties.put("version", this.version)
+        expand project.properties
+    }
 
-defaultTasks 'build'
+    license {
+        header = rootProject.file("HEADER.txt")
+        include '**/*.java'
+        newLine = true
+    }
+
+    defaultTasks 'licenseFormat', 'build'
+}
