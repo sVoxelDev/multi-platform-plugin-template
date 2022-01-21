@@ -15,6 +15,7 @@ allprojects {
     apply plugin: 'checkstyle'
 
     checkstyle {
+        toolVersion = '8.29'
         configFile = rootProject.file('config/checkstyle/checkstyle.xml')
         configProperties.checkstyleSuppressionsPath = rootProject.file('config/checkstyle/supressions.xml')
     }
@@ -57,10 +58,11 @@ subprojects {
         mavenLocal()
         mavenCentral()
         maven { url = 'https://jitpack.io' }
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
     dependencies {
-        api 'net.kyori:adventure-api:4.10.0-SNAPSHOT'
+        api 'net.kyori:adventure-api:4.9.3'
 
         implementation 'org.jetbrains:annotations:22.0.0'
 

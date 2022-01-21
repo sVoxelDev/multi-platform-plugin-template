@@ -1,3 +1,27 @@
+/*
+ * This file is part of multi-platform-template, licensed under the MIT License.
+ * Copyright (C) Silthus <https://www.github.com/silthus>
+ * Copyright (C) multi-platform-template team and contributors
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in all
+ *  copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *  SOFTWARE.
+ */
+
 package net.silthus.template.platform.locale;
 
 import com.google.common.collect.Maps;
@@ -35,11 +59,10 @@ public class TranslationManager {
     public static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
     private final Set<Locale> installed = ConcurrentHashMap.newKeySet();
-    private TranslationRegistry registry;
-
     private final Path translationsDirectory;
     private final Path repositoryTranslationsDirectory;
     private final Path customTranslationsDirectory;
+    private TranslationRegistry registry;
 
     public TranslationManager(Path configDirectory) {
         this.translationsDirectory = configDirectory.resolve("translations");
@@ -52,6 +75,41 @@ public class TranslationManager {
         } catch (IOException e) {
             // ignore
         }
+    }
+
+    public static boolean isTranslationFile(Path path) {
+        return path.getFileName().toString().endsWith(".properties");
+    }
+
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private static boolean isAdventureDuplicatesException(Exception e) {
+        return e instanceof IllegalArgumentException && (e.getMessage().startsWith("Invalid key") || e.getMessage().startsWith("Translation already exists"));
+    }
+
+    public static Component render(Component component) {
+        return render(component, Locale.getDefault());
+    }
+
+    public static Component render(Component component, @Nullable String locale) {
+        return render(component, parseLocale(locale));
+    }
+
+    public static Component render(Component component, @Nullable Locale locale) {
+        if (locale == null) {
+            locale = Locale.getDefault();
+            if (locale == null) {
+                locale = DEFAULT_LOCALE;
+            }
+        }
+        return GlobalTranslator.render(component, locale);
+    }
+
+    public static @Nullable Locale parseLocale(@Nullable String locale) {
+        return locale == null ? null : Translator.parseLocale(locale);
+    }
+
+    public static String localeDisplayName(Locale locale) {
+        return locale.getDisplayLanguage(locale);
     }
 
     public Path getTranslationsDirectory() {
@@ -121,10 +179,6 @@ public class TranslationManager {
         }
     }
 
-    public static boolean isTranslationFile(Path path) {
-        return path.getFileName().toString().endsWith(".properties");
-    }
-
     /**
      * Loads custom translations (in any language) from the plugin configuration folder.
      */
@@ -182,50 +236,6 @@ public class TranslationManager {
         this.registry.registerAll(locale, bundle, false);
         this.installed.add(locale);
         return Maps.immutableEntry(locale, bundle);
-    }
-
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    private static boolean isAdventureDuplicatesException(Exception e) {
-        return e instanceof IllegalArgumentException && (e.getMessage().startsWith("Invalid key") || e.getMessage().startsWith("Translation already exists"));
-    }
-
-    public static Component render(Component component) {
-        return render(component, Locale.getDefault());
-    }
-
-    public static Component render(Component component, @Nullable String locale) {
-        return render(component, parseLocale(locale));
-    }
-
-    public static Component render(Component component, @Nullable Locale locale) {
-        if (locale == null) {
-            locale = Locale.getDefault();
-            if (locale == null) {
-                locale = DEFAULT_LOCALE;
-            }
-        }
-        return GlobalTranslator.render(component, locale);
-    }
-
-    public static @Nullable Locale parseLocale(@Nullable String locale) {
-        return locale == null ? null : Translator.parseLocale(locale);
-    }
-
-    public static String localeDisplayName(Locale locale) {
-        if (locale.getLanguage().equals("zh")) {
-            if (locale.getCountry().equals("CN")) {
-                return "简体中文"; // Chinese (Simplified)
-            } else if (locale.getCountry().equals("TW")) {
-                return "繁體中文"; // Chinese (Traditional)
-            }
-            return locale.getDisplayCountry(locale) + locale.getDisplayLanguage(locale);
-        }
-
-        if (locale.getLanguage().equals("en") && locale.getCountry().equals("PT")) {
-            return "Pirate";
-        }
-
-        return locale.getDisplayLanguage(locale);
     }
 
 }

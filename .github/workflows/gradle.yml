@@ -1,5 +1,5 @@
 name: Build
-on: [push]
+on: [ push ]
 jobs:
   build:
 
@@ -63,7 +63,7 @@ jobs:
         run: ./gradlew test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
       - name: Create Coverage
         run: ./gradlew jacocoTestReport
         env:
@@ -81,7 +81,7 @@ jobs:
           files: "**/build/test-results/**/*.xml"
 
   release:
-    needs: [build, test]
+    needs: [ build, test ]
     if: github.ref == 'refs/heads/master' || 'refs/heads/beta' || github.ref == 'refs/heads/alpha'
 
     runs-on: ubuntu-18.04

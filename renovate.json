@@ -1,9 +1,13 @@
 {
-  "extends": ["config:base"],
+  "extends": [
+    "config:base"
+  ],
   "gradle": {
     "enabled": true
   },
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "packageRules": [
     {
       "matchPackagePatterns": [

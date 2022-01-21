@@ -1,20 +1,25 @@
 /*
- * sChat, a Supercharged Minecraft Chat Plugin
+ * This file is part of multi-platform-template, licensed under the MIT License.
  * Copyright (C) Silthus <https://www.github.com/silthus>
- * Copyright (C) sChat team and contributors
+ * Copyright (C) multi-platform-template team and contributors
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ *  The above copyright notice and this permission notice shall be included in all
+ *  copies or substantial portions of the Software.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *  SOFTWARE.
  */
 
 package net.silthus.template.platform.sender;
@@ -57,32 +62,6 @@ final class FactorySender<T> implements Sender {
         this.identity = factory.getIdentity(sender);
     }
 
-    @Override
-    public void sendMessage(Component message) {
-        if (isConsole()) {
-            for (Component line : splitNewlines(message)) {
-                factory.sendMessage(handle, line);
-            }
-        } else {
-            factory.sendMessage(handle, message);
-        }
-    }
-
-    @Override
-    public boolean hasPermission(String permission) {
-        return isConsole() || factory.hasPermission(handle, permission);
-    }
-
-    @Override
-    public void performCommand(String commandLine) {
-        factory.performCommand(handle, commandLine);
-    }
-
-    @Override
-    public boolean isValid() {
-        return isConsole() || factory.isPlayerOnline(getUniqueId());
-    }
-
     // A small utility method which splits components built using
     // > join(newLine(), components...)
     // back into separate components.
@@ -114,5 +93,31 @@ final class FactorySender<T> implements Sender {
         }
 
         return Collections.singleton(message);
+    }
+
+    @Override
+    public void sendMessage(Component message) {
+        if (isConsole()) {
+            for (Component line : splitNewlines(message)) {
+                factory.sendMessage(handle, line);
+            }
+        } else {
+            factory.sendMessage(handle, message);
+        }
+    }
+
+    @Override
+    public boolean hasPermission(String permission) {
+        return isConsole() || factory.hasPermission(handle, permission);
+    }
+
+    @Override
+    public void performCommand(String commandLine) {
+        factory.performCommand(handle, commandLine);
+    }
+
+    @Override
+    public boolean isValid() {
+        return isConsole() || factory.isPlayerOnline(getUniqueId());
     }
 }
