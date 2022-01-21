@@ -21,19 +21,25 @@ class ExampleCommandTest extends CommandTest {
         register(new ExampleCommand(config));
     }
 
-    @DisplayName("/template test <text>")
+    @DisplayName("/myplugin test <text>")
     @Nested
     class testCommand {
         @Test
         void sends_input_message() {
-            cmd("template test Hi!");
+            cmd("myplugin test Hi!");
             assertLastMessageIs(TEST_MESSAGE.build("Hi!"));
         }
 
         @Test
         void given_no_input_uses_config_value() {
-            cmd("template test");
+            cmd("myplugin test");
             assertLastMessageIs(TEST_MESSAGE.build(config.get(TEST)));
+        }
+
+        @Test
+        void given_multiple_words_prints_all() {
+            cmd("myplugin test hi there");
+            assertLastMessageIs(TEST_MESSAGE.build("hi there"));
         }
     }
 }

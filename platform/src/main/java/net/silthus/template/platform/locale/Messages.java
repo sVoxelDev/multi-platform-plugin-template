@@ -24,11 +24,11 @@ import java.util.Iterator;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.TranslatableComponent;
 import net.silthus.template.platform.sender.Sender;
 
 import static net.kyori.adventure.text.Component.space;
 import static net.kyori.adventure.text.Component.text;
-import static net.kyori.adventure.text.Component.translatable;
 import static net.kyori.adventure.text.format.NamedTextColor.AQUA;
 import static net.kyori.adventure.text.format.NamedTextColor.DARK_AQUA;
 import static net.kyori.adventure.text.format.NamedTextColor.GOLD;
@@ -37,6 +37,8 @@ import static net.kyori.adventure.text.format.NamedTextColor.GREEN;
 import static net.kyori.adventure.text.format.NamedTextColor.RED;
 import static net.kyori.adventure.text.format.TextDecoration.BOLD;
 import static net.kyori.adventure.text.format.TextDecoration.ITALIC;
+import static net.silthus.template.platform.plugin.TemplatePlugin.NAMESPACE;
+import static net.silthus.template.platform.plugin.TemplatePlugin.PLUGIN_NAME;
 
 public interface Messages {
 
@@ -44,13 +46,16 @@ public interface Messages {
     TextComponent CLOSE_BRACKET = Component.text(')');
     TextComponent FULL_STOP = Component.text('.');
 
+    static TranslatableComponent.Builder translatable(String key) {
+        return Component.translatable().key(NAMESPACE + "." + key);
+    }
+
     Component PREFIX_COMPONENT = text()
         .color(GRAY)
         .append(text('['))
         .append(text()
             .decoration(BOLD, true)
-            .append(text('s', GOLD, ITALIC))
-            .append(text("Chat", DARK_AQUA))
+            .append(text(PLUGIN_NAME, GOLD, ITALIC))
         )
         .append(text(']'))
         .build();
@@ -63,8 +68,14 @@ public interface Messages {
             .build();
     }
 
-    Args1<String> TEST_MESSAGE = text -> translatable()
-        .key("my-plugin.command.test")
+    // &aConfiguration successfully reloaded.
+    Args0 CONFIG_RELOADED = () -> prefixed(translatable("command.reload")
+        .color(GREEN)
+        .append(FULL_STOP)
+        .build());
+
+    // &aMessage: {0}
+    Args1<String> TEST_MESSAGE = text -> translatable("command.test")
         .color(GREEN)
         .args(text(text))
         .append(FULL_STOP)
@@ -73,7 +84,7 @@ public interface Messages {
     static Component formatStringList(Collection<String> strings) {
         Iterator<String> it = strings.iterator();
         if (!it.hasNext()) {
-            return translatable("schat.command.misc.none", AQUA); // "&bNone"
+            return translatable("command.misc.none").color(AQUA).build(); // "&bNone"
         }
 
         TextComponent.Builder builder = text().color(DARK_AQUA).content(it.next());

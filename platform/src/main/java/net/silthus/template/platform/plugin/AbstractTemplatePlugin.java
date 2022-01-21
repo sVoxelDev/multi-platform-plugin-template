@@ -26,20 +26,24 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import lombok.Getter;
 import net.silthus.template.platform.command.Commands;
+import net.silthus.template.platform.command.commands.ExampleCommand;
 import net.silthus.template.platform.config.TemplateConfig;
 import net.silthus.template.platform.config.adapter.ConfigurationAdapter;
+import net.silthus.template.platform.locale.TranslationManager;
 import net.silthus.template.platform.sender.Sender;
 import org.jetbrains.annotations.ApiStatus;
 
 @Getter
 public abstract class AbstractTemplatePlugin implements TemplatePlugin {
 
+    private TranslationManager translationManager;
     private TemplateConfig config;
     private Commands commands;
 
     @Override
     public final void load() {
-
+        this.translationManager = new TranslationManager(getBootstrap().getConfigDirectory());
+        this.translationManager.reload();
     }
 
     @Override
@@ -70,7 +74,7 @@ public abstract class AbstractTemplatePlugin implements TemplatePlugin {
     }
 
     private void registerNativeCommands() {
-        commands.register();
+        commands.register(new ExampleCommand(getConfig()));
     }
 
     @ApiStatus.OverrideOnly

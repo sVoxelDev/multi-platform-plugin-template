@@ -17,28 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.silthus.template.platform.plugin;
+package net.silthus.template.bukkit.adapter;
 
-import net.silthus.template.platform.config.TemplateConfig;
-import net.silthus.template.platform.plugin.bootstrap.Bootstrap;
-import net.silthus.template.platform.plugin.logging.PluginLogger;
+import java.util.concurrent.Executor;
+import net.silthus.template.platform.plugin.scheduler.AbstractJavaScheduler;
+import net.silthus.template.platform.plugin.scheduler.SchedulerAdapter;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public interface TemplatePlugin {
+public final class BukkitSchedulerAdapter extends AbstractJavaScheduler implements SchedulerAdapter {
 
-    String NAMESPACE = "myplugin"; // must be lowered key without special characters
-    String PLUGIN_NAME = "MyPlugin";
+    private final Executor sync;
 
-    void load();
-
-    void enable();
-
-    void disable();
-
-    Bootstrap getBootstrap();
-
-    default PluginLogger getLogger() {
-        return getBootstrap().getPluginLogger();
+    public BukkitSchedulerAdapter(JavaPlugin loader) {
+        this.sync = r -> loader.getServer().getScheduler().scheduleSyncDelayedTask(loader, r);
     }
 
-    TemplateConfig getConfig();
+    @Override
+    public Executor sync() {
+        return this.sync;
+    }
+
 }
