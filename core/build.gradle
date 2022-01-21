@@ -1,0 +1,8 @@
+
+dependencies {
+    api project(':api')
+
+    testImplementation(testFixtures(project(":api")))
+
+    testFixturesImplementation(testFixtures(project(':api')))
+}
