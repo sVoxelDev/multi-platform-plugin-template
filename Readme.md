@@ -11,13 +11,12 @@
 [![Discord Shield](https://discordapp.com/api/guilds/905798902874267690/widget.png?style=shield)](https://discord.gg/HSU8FtgjVD)
 
 You can use this template to develop your own high quality Minecraft plugins for multiple platforms
-using [Gradle](https://gradle.org/) with ease.
+using [Gradle][gradle] with ease.
 
-This template is a more advanced version of
-the [spigot-plugin-template](https://github.com/sVoxelDev/spigot-plugin-template) and overs an easy start to develop
-your plugin for multiple Minecraft platforms, like `Paper`, `Nukkit`, `Velocity`, `Bungee`, etc.
+This template is a more advanced version of the [spigot-plugin-template][plugin-template] and offers an easy start to
+develop your plugin for multiple Minecraft platforms, like `Paper`, `Nukkit`, `Velocity`, `Bungee`, etc.
 
-> See the [minecraft-server-template](https://github.com/sVoxelDev/minecraft-server-template) for quick starting your Minecraft network in under 30 seconds.
+> See the [minecraft-server-template][server-template] for quick starting your Minecraft network in under 30 seconds.
 
 * [Features](#features)
 * [Quickstart setup](#quickstart-setup)
@@ -34,37 +33,19 @@ your plugin for multiple Minecraft platforms, like `Paper`, `Nukkit`, `Velocity`
 ## Features
 
 The template or better boilerplate comes with a lot of features that are useful if you want to develop high quality
-plugins. However, you don't need to use all of them, you can simply remove the features you don't need.
+plugins for multiple Minecraft platforms. However, you don't need to use all of them, you can simply remove the features
+and platforms you don't need.
 
-* Ready to use [**Gradle**](https://gradle.org/) project with lots of utility tasks
-* Automatic **generation of `plugin.yaml`** based of project properties
-  with [SpiGradle](https://github.com/EntryPointKR/Spigradle/)
-* Integrated [**Spigot test server**](https://github.com/EntryPointKR/Spigradle/) with a one click build, copy plugin
-  and start debugging in IntelliJ task
-* [**Gradle shadow plugin**](https://imperceptiblethoughts.com/shadow/) to easily ship your needed dependencies with
-  your plugin
-* Example integrations including tests for the [Annotation Command Framework](https://github.com/aikar/commands/)
-  and [Vault](https://github.com/MilkBowl/VaultAPI).
-* **[JUnit 5](https://junit.org/junit5/docs/current/user-guide/)** test setup
-  including [MockBukkit](https://github.com/seeseemelk/MockBukkit)
-  and [AssertJ](https://joel-costigliola.github.io/assertj/)
-* **[Jacoco](https://github.com/jacoco/jacoco) code coverage** report including an upload task
-  to [codecov](https://codecov.io/)
-* Fully integrated [**semantic-release**](https://semantic-release.gitbook.io/semantic-release/) release pipeline
-* Automatic [**changelog generation**](https://github.com/semantic-release/changelog) based
-  on [conventional commit messages](https://www.conventionalcommits.org/)
-* [**Github Actions**](https://github.com/features/actions) workflow for build and release
-* Publishing of **maven artifacts** to [GitHub Packages](https://github.com/features/packages)
-  > no more need for self hosted nexus or artifactory server
-* GitHub [**issue
-  templates**](https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository)
-  for bug and feature requests
-* Contributing and Code of Conduct **guidelines**
-* Nice [**badges**](https://shields.io) to show of your project
+* Everything from the [spigot-plugin-template][plugin-template].
+* Platform independent architecture divided into `api`, `core` and `platform` modules.
+* Uses the [cloud-command-framework][cloud-commands] to create platform independent commands.
+* Platform independent configurations using [Configurate][configurate] - inspired by [LuckPerms][luckperms]
+* Centralized messaging with client side translations using the [adventure-text][adventure] API.
+* Examples for using [Test Driven Development][tdd]
 
 ## Quickstart setup
 
-* Create a [new Github project](https://github.com/Silthus/spigot-plugin-template/generate) using this template.
+* Create a [new Github project][template] using this template.
 * **Clone** the new repository and open it in IntelliJ.
 * **Update** the **gradle.properties** file and change the following variables:
   * `group`: your-maven-group-id (e.g.: io.github.silthus)
@@ -237,3 +218,19 @@ the [Spigradle Github page](https://github.com/spigradle/spigradle).
 * [semantic-release](https://semantic-release.gitbook.io/semantic-release/): *in my opinion every project should use
   this!*
 * [conventional commit messages](https://www.conventionalcommits.org/): *do commit message the right way*
+
+[gradle]: https://gradle.org
+
+[server-template]: https://github.com/sVoxelDev/minecraft-server-template
+
+[plugin-template]: https://github.com/sVoxelDev/spigot-plugin-template
+
+[cloud-commands]: https://github.com/Incendo/cloud
+
+[configurate]: https://github.com/SpongePowered/Configurate
+
+[luckperms]: https://github.com/LuckPerms/LuckPerms
+
+[adventure]: https://github.com/KyoriPowered/adventure
+
+[tdd]: https://www.agilealliance.org/glossary/tdd
