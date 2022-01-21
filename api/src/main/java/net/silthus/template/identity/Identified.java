@@ -17,25 +17,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.silthus.template.integrations.vault;
+package net.silthus.template.identity;
 
-import net.milkbowl.vault.economy.Economy;
-import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
 
-public class VaultProvider {
+/**
+ * Marks an entity as identified requiring it to have an {@link IdentityImpl}.
+ *
+ * @since next
+ */
+public interface Identified {
 
-    private final Economy economy;
-
-    public VaultProvider(Economy economy) {
-        this.economy = economy;
-    }
-
-    public VaultProvider() {
-        this.economy = null;
-    }
-
-    public double getBalance(OfflinePlayer player) {
-        if (economy == null) return 0d;
-        return economy.getBalance(player);
-    }
+    /**
+     * Gets the identity of the identified entity.
+     *
+     * @return the identity
+     * @since next
+     */
+    @NotNull Identity getIdentity();
 }
