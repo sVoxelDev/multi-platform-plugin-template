@@ -54,7 +54,7 @@ subprojects {
     dependencies {
         api 'net.kyori:adventure-api:4.9.3'
 
-        implementation 'org.jetbrains:annotations:22.0.0'
+        implementation 'org.jetbrains:annotations:24.0.1'
 
         // Test dependencies
         testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
