@@ -37,7 +37,7 @@ dependencies {
     implementation "net.kyori:adventure-platform-bukkit:4.0.1"
     implementation "org.spongepowered:configurate-yaml:4.1.2"
 
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:1.15.5'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:2.85.2'
     testImplementation(testFixtures(project(":core")))
 }
 
