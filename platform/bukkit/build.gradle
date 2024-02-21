@@ -33,11 +33,11 @@ dependencies {
 
     implementation spigot(mcVersion)
 
-    implementation 'cloud.commandframework:cloud-paper:1.6.1'
-    implementation "net.kyori:adventure-platform-bukkit:4.0.1"
+    implementation 'cloud.commandframework:cloud-paper:1.8.4'
+    implementation "net.kyori:adventure-platform-bukkit:4.3.2"
     implementation "org.spongepowered:configurate-yaml:4.1.2"
 
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:1.15.5'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.18:1.26.1'
     testImplementation(testFixtures(project(":core")))
 }
 
