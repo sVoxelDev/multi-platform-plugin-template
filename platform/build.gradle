@@ -7,7 +7,7 @@ allprojects {
         testFixturesImplementation(testFixtures(project(':api')))
         testFixturesImplementation(testFixtures(project(':core')))
 
-        testFixturesImplementation 'org.spongepowered:configurate-core:4.1.2'
+        testFixturesImplementation 'org.spongepowered:configurate-core:4.2.0'
     }
 }
 
@@ -22,19 +22,19 @@ subprojects {
 }
 
 dependencies {
-    implementation 'cloud.commandframework:cloud-core:1.6.1'
-    implementation 'cloud.commandframework:cloud-annotations:1.6.1'
+    implementation 'cloud.commandframework:cloud-core:1.8.4'
+    implementation 'cloud.commandframework:cloud-annotations:1.8.4'
 
-    implementation 'net.kyori:adventure-platform-api:4.0.1'
-    implementation 'net.kyori:adventure-text-minimessage:4.2.0-SNAPSHOT'
+    implementation 'net.kyori:adventure-platform-api:4.4.1'
+    implementation 'net.kyori:adventure-text-minimessage:4.26.1'
 
-    implementation 'org.spongepowered:configurate-core:4.1.2'
-    implementation 'org.spongepowered:configurate-yaml:4.1.2'
-    implementation 'org.spongepowered:configurate-xml:4.1.2'
-    implementation 'org.spongepowered:configurate-hocon:4.1.2'
-    implementation 'org.spongepowered:configurate-gson:4.1.2'
+    implementation 'org.spongepowered:configurate-core:4.2.0'
+    implementation 'org.spongepowered:configurate-yaml:4.2.0'
+    implementation 'org.spongepowered:configurate-xml:4.2.0'
+    implementation 'org.spongepowered:configurate-hocon:4.2.0'
+    implementation 'org.spongepowered:configurate-gson:4.2.0'
 
     implementation 'com.google.guava:guava:21.0'
 
-    testFixturesImplementation 'cloud.commandframework:cloud-core:1.6.1'
+    testFixturesImplementation 'cloud.commandframework:cloud-core:1.8.4'
 }
